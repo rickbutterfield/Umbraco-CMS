@@ -57,6 +57,16 @@ export abstract class UmbBlockManagerContext<
 		return this.#variantId.getValue();
 	}
 
+	#sortMode = new UmbBooleanState(undefined);
+	readonly sortMode = this.#sortMode.asObservable();
+
+	setSortMode(sortMode: boolean | undefined) {
+		this.#sortMode.setValue(sortMode ?? false);
+	}
+	getSortMode(): boolean | undefined {
+		return this.#sortMode.getValue();
+	}
+
 	readonly #structures: Array<UmbContentTypeStructureManager> = [];
 
 	#blockTypes = new UmbArrayState(<Array<BlockType>>[], (x) => x.contentElementTypeKey);

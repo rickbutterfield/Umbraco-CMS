@@ -94,6 +94,7 @@
 		"./server": "./dist-cms/packages/core/server/index.js",
 		"./server-file-system": "./dist-cms/packages/core/server-file-system/index.js",
 		"./settings": "./dist-cms/packages/settings/index.js",
+		"./sort-mode": "./dist-cms/packages/sort-mode/index.js",
 		"./sorter": "./dist-cms/packages/core/sorter/index.js",
 		"./static-file": "./dist-cms/packages/static-file/index.js",
 		"./store": "./dist-cms/packages/core/store/index.js",
