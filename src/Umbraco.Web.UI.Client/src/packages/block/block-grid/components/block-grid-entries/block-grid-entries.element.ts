@@ -178,6 +178,9 @@ export class UmbBlockGridEntriesElement extends UmbFormControlMixin(UmbLitElemen
 	}
 
 	@state()
+	private _sortMode?: boolean;
+
+	@state()
 	private _areaKey?: string | null;
 
 	@state()
@@ -246,6 +249,13 @@ export class UmbBlockGridEntriesElement extends UmbFormControlMixin(UmbLitElemen
 			},
 			null,
 		);
+
+		this.observe(
+			this.#context.sortMode,
+			(sortMode) => {
+				this._sortMode = sortMode;
+			}
+		)
 
 		this.#context.getManager().then((manager) => {
 			this.observe(
@@ -391,16 +401,16 @@ export class UmbBlockGridEntriesElement extends UmbFormControlMixin(UmbLitElemen
 			${this._styleElement}
 			<div class="umb-block-grid__layout-container" data-area-length=${this._layoutEntries.length}>
 				${repeat(
-					this._layoutEntries,
-					(x) => x.contentKey,
-					(layoutEntry, index) =>
-						html`<umb-block-grid-entry
+			this._layoutEntries,
+			(x) => x.contentKey,
+			(layoutEntry, index) =>
+				html`<umb-block-grid-entry
 							class="umb-block-grid__layout-item"
 							index=${index}
 							.contentKey=${layoutEntry.contentKey}
 							.layout=${layoutEntry}>
 						</umb-block-grid-entry>`,
-				)}
+		)}
 			</div>
 			${this._canCreate ? this.#renderCreateButtonGroup() : nothing}
 			${this._areaKey ? html` <uui-form-validation-message .for=${this}></uui-form-validation-message>` : nothing}

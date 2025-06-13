@@ -61,6 +61,9 @@ export class UmbBlockGridEntryContext
 		return this.#relevantColumnSpanOptions.getValue();
 	}
 
+	#sortMode = new UmbBooleanState(false);
+	readonly sortMode = this.#sortMode.asObservable();
+
 	#canScale = new UmbBooleanState(false);
 	readonly canScale = this.#canScale.asObservable();
 
@@ -269,6 +272,14 @@ export class UmbBlockGridEntryContext
 				}
 			},
 			'observeRowSpanValidation',
+		);
+
+		this.observe(
+			this._entries.sortMode,
+			(sortMode) => {
+				this.#sortMode.setValue(sortMode);
+			},
+			'observeSortMode',
 		);
 	}
 

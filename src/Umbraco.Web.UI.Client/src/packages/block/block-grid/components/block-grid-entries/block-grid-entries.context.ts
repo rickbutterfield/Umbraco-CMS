@@ -34,6 +34,7 @@ import {
 	UmbBlockEntriesContext,
 	type UmbBlockDataModel,
 } from '@umbraco-cms/backoffice/block';
+import { UMB_SORT_MODE_CONTEXT } from '@umbraco-cms/backoffice/sort-mode';
 
 interface UmbBlockGridAreaTypeInvalidRuleType {
 	groupKey?: string;
@@ -52,12 +53,14 @@ export class UmbBlockGridEntriesContext
 		UmbBlockGridLayoutModel,
 		UmbBlockGridWorkspaceOriginData
 	>
-	implements UmbBlockGridScalableContainerContext
-{
+	implements UmbBlockGridScalableContainerContext {
 	//
 	#pathAddendum = new UmbRoutePathAddendumContext(this);
 
 	#parentEntry?: typeof UMB_BLOCK_GRID_ENTRY_CONTEXT.TYPE;
+
+	#sortMode = new UmbBooleanState(false);
+	readonly sortMode = this.#sortMode.asObservable();
 
 	#layoutColumns = new UmbNumberState(undefined);
 	readonly layoutColumns = this.#layoutColumns.asObservable();
@@ -158,6 +161,16 @@ export class UmbBlockGridEntriesContext
 		this.consumeContext(UMB_BLOCK_GRID_ENTRY_CONTEXT, (blockGridEntry) => {
 			this.#parentEntry = blockGridEntry;
 			this.#gotBlockParentEntry(); // is not used at this point. [NL]
+		});
+
+		this.consumeContext(UMB_SORT_MODE_CONTEXT, (sortModeContext) => {
+			this.observe(
+				sortModeContext?.sortMode,
+				(sortMode) => {
+					this.#sortMode.setValue(sortMode ?? false);
+				},
+				'observeSortMode',
+			);
 		});
 
 		new UmbModalRouteRegistrationController(this, UMB_BLOCK_CATALOGUE_MODAL)

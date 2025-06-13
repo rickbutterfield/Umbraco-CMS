@@ -1,5 +1,5 @@
 import type { UmbExtensionManifestKind } from '@umbraco-cms/backoffice/extension-registry';
-import { UMB_WRITEABLE_PROPERTY_CONDITION_ALIAS } from '@umbraco-cms/backoffice/property';
+import { UMB_WRITABLE_PROPERTY_CONDITION_ALIAS } from '@umbraco-cms/backoffice/property';
 import { UMB_PROPERTY_ACTION_DEFAULT_KIND_MANIFEST } from '@umbraco-cms/backoffice/property-action';
 
 export const UMB_PROPERTY_ACTION_TOGGLE_SORT_MODE_KIND_MANIFEST: UmbExtensionManifestKind = {
@@ -19,7 +19,7 @@ export const UMB_PROPERTY_ACTION_TOGGLE_SORT_MODE_KIND_MANIFEST: UmbExtensionMan
 		},
 		conditions: [
 			{
-				alias: UMB_WRITEABLE_PROPERTY_CONDITION_ALIAS,
+				alias: UMB_WRITABLE_PROPERTY_CONDITION_ALIAS,
 			},
 		],
 	},

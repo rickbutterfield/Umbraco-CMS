@@ -102,6 +102,9 @@ export class UmbBlockGridEntryElement extends UmbLitElement implements UmbProper
 	_inlineEditingMode?: boolean;
 
 	@state()
+	_sortMode?: boolean;
+
+	@state()
 	_canScale?: boolean;
 	@state()
 	_showInlineCreateBefore?: boolean;
@@ -214,7 +217,14 @@ export class UmbBlockGridEntryElement extends UmbLitElement implements UmbProper
 			},
 			null,
 		);
-
+		this.observe(
+			this.#context.sortMode,
+			(mode) => {
+				this._sortMode = mode;
+				this.requestUpdate('_sortMode');
+			},
+			null,
+		);
 		this.observe(
 			this.#context.inlineEditingMode,
 			(mode) => {
@@ -446,15 +456,17 @@ export class UmbBlockGridEntryElement extends UmbLitElement implements UmbProper
 			? html`
 					${this.#renderCreateBeforeInlineButton()}
 					<div class="umb-block-grid__block" part="umb-block-grid__block">
-						<umb-extension-slot
-							.filter=${this.#extensionSlotFilterMethod}
-							.renderMethod=${this.#extensionSlotRenderMethod}
-							.props=${this._blockViewProps}
-							default-element=${this._inlineEditingMode ? 'umb-block-grid-block-inline' : 'umb-block-grid-block'}
-							type="blockEditorCustomView"
-							single
-							>${this.#renderBuiltinBlockView()}</umb-extension-slot
-						>
+						${!this._sortMode
+							? html`<umb-extension-slot
+									.filter=${this.#extensionSlotFilterMethod}
+									.renderMethod=${this.#extensionSlotRenderMethod}
+									.props=${this._blockViewProps}
+									default-element=${this._inlineEditingMode ? 'umb-block-grid-block-inline' : 'umb-block-grid-block'}
+									type="blockEditorCustomView"
+									single
+									>${this.#renderBuiltinBlockView()}</umb-extension-slot
+								>`
+							: this.#renderBuiltinBlockView()}
 						${this.#renderActionBar()}
 						${!this._showContentEdit && this._contentInvalid
 							? html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`

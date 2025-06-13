@@ -1,4 +1,4 @@
-import { UmbSortModePropertyAction } from "@umbraco-cms/backoffice/sort-mode";
+import { UmbSortModePropertyAction } from '@umbraco-cms/backoffice/sort-mode';
 
 /**
  * The Block Grid Sort Mode Property Action.
