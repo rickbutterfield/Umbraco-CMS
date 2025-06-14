@@ -71,6 +71,18 @@ export class UmbBlockWorkspaceContext<LayoutDataType extends UmbBlockLayoutBaseM
 	#exposed = new UmbBooleanState<undefined>(undefined);
 	readonly exposed = this.#exposed.asObservable();
 
+	#hasAnyCustomViews = new UmbBooleanState<boolean>(false);
+	readonly hasAnyCustomViews = this.#hasAnyCustomViews.asObservable();
+
+	setHasAnyCustomViews(hasAnyCustomViews: boolean) {
+		debugger;
+		this.#hasAnyCustomViews.setValue(hasAnyCustomViews);
+	}
+	getHasAnyCustomViews() {
+		debugger;
+		return this.#hasAnyCustomViews.value;
+	}
+
 	public readonly readOnlyGuard = new UmbReadOnlyVariantGuardManager(this);
 
 	constructor(host: UmbControllerHost, workspaceArgs: { manifest: ManifestWorkspace }) {
@@ -218,6 +230,18 @@ export class UmbBlockWorkspaceContext<LayoutDataType extends UmbBlockLayoutBaseM
 				);
 			},
 			'observeContentTypeId',
+		);
+
+		this.observe(
+			manager.hasAnyCustomViews,
+			(hasAnyCustomViews) => {
+				debugger;
+				if (hasAnyCustomViews) {
+					debugger;
+					this.#hasAnyCustomViews.setValue(hasAnyCustomViews);
+				}
+			},
+			'observeHasAnyCustomViews',
 		);
 	}
 

@@ -29,8 +29,6 @@ export class UmbSortModePropertyAction extends UmbPropertyActionBase<MetaPropert
 		if (!this.#sortModePropertyContext) throw new Error('Sort mode context not found');
 
 		const isSortModeActive = await this.#sortModePropertyContext.getSortMode();
-
-		//TODO: Setting this here affects all block grid and lists, rather than contextually
 		await this.#sortModePropertyContext.setSortMode(!isSortModeActive);
 	}
 }

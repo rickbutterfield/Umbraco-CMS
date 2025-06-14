@@ -6,6 +6,9 @@ export type BlockWorkspaceHasSettingsConditionConfig =
 export type BlockEntryShowContentEditConditionConfig =
 	UmbConditionConfigBase<'Umb.Condition.BlockEntryShowContentEdit'>;
 
+export type BlockManagerHasCustomViewConditionConfig =
+	UmbConditionConfigBase<'Umb.Condition.BlockManagerHasCustomView'>;
+
 export interface BlockEntryIsExposedConditionConfig
 	extends UmbConditionConfigBase<'Umb.Condition.BlockWorkspaceIsExposed'> {
 	match?: boolean;
@@ -16,6 +19,7 @@ declare global {
 		umbBlock:
 			| BlockEntryShowContentEditConditionConfig
 			| BlockWorkspaceHasSettingsConditionConfig
-			| BlockEntryIsExposedConditionConfig;
+			| BlockEntryIsExposedConditionConfig
+			| BlockManagerHasCustomViewConditionConfig;
 	}
 }

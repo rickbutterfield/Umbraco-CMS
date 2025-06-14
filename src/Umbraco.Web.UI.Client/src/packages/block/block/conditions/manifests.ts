@@ -19,4 +19,10 @@ export const manifests: Array<ManifestCondition> = [
 		alias: 'Umb.Condition.BlockWorkspaceIsExposed',
 		api: () => import('./block-workspace-is-exposed.condition.js'),
 	},
+	{
+		type: 'condition',
+		name: 'Block Manager Has Custom View Condition',
+		alias: 'Umb.Condition.BlockManagerHasCustomView',
+		api: () => import('./block-manager-has-custom-view.condition.js'),
+	},
 ];

@@ -1,4 +1,4 @@
-import type { UmbBlockWorkspaceOriginData } from '../workspace/index.js';
+import { type UmbBlockWorkspaceOriginData } from '../workspace/index.js';
 import type { UmbBlockLayoutBaseModel, UmbBlockDataModel, UmbBlockExposeModel } from '../types.js';
 import { UMB_BLOCK_MANAGER_CONTEXT } from './block-manager.context-token.js';
 import { UmbContextBase } from '@umbraco-cms/backoffice/class-api';
@@ -36,6 +36,7 @@ export abstract class UmbBlockManagerContext<
 	BlockLayoutType extends UmbBlockLayoutBaseModel = UmbBlockLayoutBaseModel,
 	BlockOriginDataType extends UmbBlockWorkspaceOriginData = UmbBlockWorkspaceOriginData,
 > extends UmbContextBase {
+
 	get contentTypesLoaded() {
 		return Promise.all(this.#contentTypeRequests);
 	}
@@ -86,6 +87,16 @@ export abstract class UmbBlockManagerContext<
 
 	readonly #settings = new UmbArrayState(<Array<UmbBlockDataModel>>[], (x) => x.key);
 	public readonly settings = this.#settings.asObservable();
+
+	readonly #hasAnyCustomViews = new UmbBooleanState(undefined);
+	public readonly hasAnyCustomViews = this.#hasAnyCustomViews.asObservable();
+
+	setHasAnyCustomViews(hasAnyCustomViews: boolean) {
+		this.#hasAnyCustomViews.setValue(hasAnyCustomViews);
+	}
+	getHasAnyCustomViews() {
+		return this.#hasAnyCustomViews.value;
+	}
 
 	// TODO: This is a bad seperation of concerns, this should be self initializing, not defined from the outside. [NL]
 	public readonly readOnlyState = new UmbReadOnlyVariantGuardManager(this);

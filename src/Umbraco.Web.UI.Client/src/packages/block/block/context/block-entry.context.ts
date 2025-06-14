@@ -436,6 +436,17 @@ export abstract class UmbBlockEntryContext<
 		this.#observeLayout();
 	}
 
+	getHasAnyCustomView() {
+		if (this._manager) {
+			return this._manager.hasAnyCustomViews;
+		}
+		return false;
+	}
+
+	setHasCustomView(hasCustomView: boolean) {
+		this._manager?.setHasAnyCustomViews(hasCustomView);
+	}
+
 	/**
 	 * Get the current value of this Blocks label.
 	 * @function getName

@@ -22,6 +22,9 @@ export const manifests: Array<UmbExtensionManifest | UmbExtensionManifestKind> =
 			{
 				alias: UMB_PROPERTY_HAS_VALUE_CONDITION_ALIAS,
 			},
+			{
+				alias: 'Umb.Condition.BlockManagerHasCustomView',
+			},
 		],
 	},
 ];

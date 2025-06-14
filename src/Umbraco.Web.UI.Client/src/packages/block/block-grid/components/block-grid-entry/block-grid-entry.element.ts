@@ -431,6 +431,8 @@ export class UmbBlockGridEntryElement extends UmbLitElement implements UmbProper
 		if (manifest.forBlockEditor && !stringOrStringArrayContains(manifest.forBlockEditor, UMB_BLOCK_GRID)) {
 			return false;
 		}
+
+		this.#context.setHasCustomView(true);
 		return true;
 	};
 

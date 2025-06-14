@@ -4,7 +4,7 @@ export const manifests = [
         alias: 'Umb.blockEditorCustomView.TestView',
         name: 'Block Editor Custom View Test',
         element: () => import('./block-custom-view.js'),
-        forContentTypeAlias: ['headlineUmbracoDemoBlock', 'heroBlock'],
+        forContentTypeAlias: ['headlineUmbracoDemoBlock'],
         forBlockEditor: ['block-list', 'block-grid'],
     },
 ];
