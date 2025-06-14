@@ -1,4 +1,3 @@
-import { manifests as customBlockViewManifests } from '../../../examples/block-custom-view/index.js';
 import { manifests as authManifests } from './auth/manifests.js';
 import { manifests as collectionManifests } from './collection/manifests.js';
 import { manifests as cultureManifests } from './culture/manifests.js';
@@ -48,5 +47,4 @@ export const manifests: Array<UmbExtensionManifest | UmbExtensionManifestKind> =
 	...themeManifests,
 	...treeManifests,
 	...workspaceManifests,
-	...customBlockViewManifests,
 ];

@@ -34,7 +34,7 @@ import {
 	UmbBlockEntriesContext,
 	type UmbBlockDataModel,
 } from '@umbraco-cms/backoffice/block';
-import { UMB_SORT_MODE_CONTEXT } from '@umbraco-cms/backoffice/sort-mode';
+import { UMB_SORT_MODE_CONTEXT, UMB_SORT_MODE_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/sort-mode';
 
 interface UmbBlockGridAreaTypeInvalidRuleType {
 	groupKey?: string;
@@ -163,7 +163,7 @@ export class UmbBlockGridEntriesContext
 			this.#gotBlockParentEntry(); // is not used at this point. [NL]
 		});
 
-		this.consumeContext(UMB_SORT_MODE_CONTEXT, (sortModeContext) => {
+		this.consumeContext(UMB_SORT_MODE_PROPERTY_CONTEXT, (sortModeContext) => {
 			this.observe(
 				sortModeContext?.sortMode,
 				(sortMode) => {

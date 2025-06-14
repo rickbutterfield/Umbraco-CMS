@@ -93,6 +93,9 @@ export class UmbBlockListEntryElement extends UmbLitElement implements UmbProper
 	@state()
 	_inlineEditingMode?: boolean;
 
+	@state()
+	_sortMode?: boolean;
+
 	// 'content-invalid' attribute is used for styling purpose.
 	@property({ type: Boolean, attribute: 'content-invalid', reflect: true })
 	_contentInvalid?: boolean;
@@ -182,6 +185,14 @@ export class UmbBlockListEntryElement extends UmbLitElement implements UmbProper
 			this.#context.inlineEditingMode,
 			(mode) => {
 				this._inlineEditingMode = mode;
+			},
+			null,
+		);
+		this.observe(
+			this.#context.sortMode,
+			(mode) => {
+				this._sortMode = mode;
+				this.requestUpdate('_sortMode');
 			},
 			null,
 		);
@@ -403,22 +414,24 @@ export class UmbBlockListEntryElement extends UmbLitElement implements UmbProper
 		return this.contentKey && (this._contentTypeAlias || this._unsupported)
 			? html`
 					<div class="umb-block-list__block">
-						<umb-extension-slot
-							type="blockEditorCustomView"
-							default-element=${this._inlineEditingMode ? 'umb-inline-list-block' : 'umb-ref-list-block'}
-							.renderMethod=${this.#extensionSlotRenderMethod}
-							.props=${this._blockViewProps}
-							.filter=${this.#extensionSlotFilterMethod}
-							single
-							>${this.#renderBuiltinBlockView()}</umb-extension-slot
-						>
+						${!this._sortMode
+							? html`<umb-extension-slot
+									type="blockEditorCustomView"
+									default-element=${this._inlineEditingMode ? 'umb-inline-list-block' : 'umb-ref-list-block'}
+									.renderMethod=${this.#extensionSlotRenderMethod}
+									.props=${this._blockViewProps}
+									.filter=${this.#extensionSlotFilterMethod}
+									single
+									>${this.#renderBuiltinBlockView()}</umb-extension-slot
+								>`
+							: this.#renderBuiltinBlockView()}
 						<uui-action-bar>
 							${this.#renderEditContentAction()} ${this.#renderEditSettingsAction()}
 							${this.#renderCopyToClipboardAction()} ${this.#renderDeleteAction()}
 						</uui-action-bar>
 						${!this._showContentEdit && this._contentInvalid
-							? html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`
-							: nothing}
+					? html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`
+					: nothing}
 					</div>
 				`
 			: nothing;
@@ -433,8 +446,8 @@ export class UmbBlockListEntryElement extends UmbLitElement implements UmbProper
 					href=${this._workspaceEditContentPath}>
 					<uui-icon name=${this._exposed === false && this._isReadOnly === false ? 'icon-add' : 'icon-edit'}></uui-icon>
 					${this._contentInvalid
-						? html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`
-						: nothing}
+					? html`<uui-badge attention color="invalid" label="Invalid content">!</uui-badge>`
+					: nothing}
 				</uui-button>`
 			: this._showContentEdit === false && this._exposed === false
 				? html`<uui-button
@@ -456,8 +469,8 @@ export class UmbBlockListEntryElement extends UmbLitElement implements UmbProper
 						href=${this._workspaceEditSettingsPath}>
 						<uui-icon name="icon-settings"></uui-icon>
 						${this._settingsInvalid
-							? html`<uui-badge attention color="invalid" label="Invalid settings">!</uui-badge>`
-							: nothing}
+						? html`<uui-badge attention color="invalid" label="Invalid settings">!</uui-badge>`
+						: nothing}
 					</uui-button>`
 				: nothing}
 		`;

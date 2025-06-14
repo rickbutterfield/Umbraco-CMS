@@ -1,6 +1,7 @@
 import { UMB_SORT_MODE_PROPERTY_CONTEXT } from './sort-mode.property-context-token.js';
 import type { UmbControllerHost } from '@umbraco-cms/backoffice/controller-api';
 import { UmbContextBase } from '@umbraco-cms/backoffice/class-api';
+import { UmbBooleanState } from '@umbraco-cms/backoffice/observable-api';
 
 /**
  * Sort mode context for managing entries for property values
@@ -9,6 +10,16 @@ import { UmbContextBase } from '@umbraco-cms/backoffice/class-api';
  * @augments {UmbContextBase}
  */
 export class UmbSortModePropertyContext extends UmbContextBase {
+	#sortMode = new UmbBooleanState(false);
+	readonly sortMode = this.#sortMode.asObservable();
+
+	setSortMode(sortMode: boolean | undefined) {
+		this.#sortMode.setValue(sortMode ?? false);
+	}
+	getSortMode(): boolean | undefined {
+		return this.#sortMode.getValue();
+	}
+
 	constructor(host: UmbControllerHost) {
 		super(host, UMB_SORT_MODE_PROPERTY_CONTEXT);
 	}

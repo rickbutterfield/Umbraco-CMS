@@ -22,6 +22,9 @@ export class UmbBlockListEntryContext extends UmbBlockEntryContext<
 		},
 	);
 
+	#sortMode = new UmbBooleanState(undefined);
+	readonly sortMode = this.#sortMode.asObservable();
+
 	constructor(host: UmbControllerHost) {
 		super(host, UMB_BLOCK_LIST_MANAGER_CONTEXT, UMB_BLOCK_LIST_ENTRIES_CONTEXT);
 	}
@@ -36,7 +39,15 @@ export class UmbBlockListEntryContext extends UmbBlockEntryContext<
 		);
 	}
 
-	_gotEntries() {}
+	_gotEntries() {
+		this.observe(
+			this._entries?.sortMode,
+			(sortMode) => {
+				this.#sortMode.setValue(sortMode);
+			},
+			'observeSortMode',
+		);
+	}
 
-	_gotContentType() {}
+	_gotContentType() { }
 }

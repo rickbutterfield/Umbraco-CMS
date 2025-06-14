@@ -16,6 +16,7 @@ import {
 	UmbClipboardPastePropertyValueTranslatorValueResolver,
 } from '@umbraco-cms/backoffice/clipboard';
 import { UMB_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/property';
+import { UMB_SORT_MODE_PROPERTY_CONTEXT } from '@umbraco-cms/backoffice/sort-mode';
 
 export class UmbBlockListEntriesContext extends UmbBlockEntriesContext<
 	typeof UMB_BLOCK_LIST_MANAGER_CONTEXT,
@@ -29,8 +30,21 @@ export class UmbBlockListEntriesContext extends UmbBlockEntriesContext<
 	// We will just say its always allowed for list for now: [NL]
 	public readonly canCreate = new UmbBooleanState(true).asObservable();
 
+	#sortMode = new UmbBooleanState(false);
+	readonly sortMode = this.#sortMode.asObservable();
+
 	constructor(host: UmbControllerHost) {
 		super(host, UMB_BLOCK_LIST_MANAGER_CONTEXT);
+
+		this.consumeContext(UMB_SORT_MODE_PROPERTY_CONTEXT, (sortModeContext) => {
+			this.observe(
+				sortModeContext?.sortMode,
+				(sortMode) => {
+					this.#sortMode.setValue(sortMode ?? false);
+				},
+				'observeSortMode',
+			);
+		});
 
 		new UmbModalRouteRegistrationController(this, UMB_BLOCK_CATALOGUE_MODAL)
 			.addAdditionalPath('_catalogue/:view/:index')

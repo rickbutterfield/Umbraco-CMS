@@ -18,17 +18,4 @@ export const manifests: Array<UmbExtensionManifest | UmbExtensionManifestKind> =
 			},
 		],
 	},
-	{
-		...UMB_PROPERTY_ACTION_TOGGLE_SORT_MODE_KIND_MANIFEST.manifest,
-		type: 'propertyAction',
-		alias: 'Umb.PropertyAction.BlockGrid.SortMode',
-		name: 'Block Grid Sort Mode Property Action',
-		api: () => import('./block-grid-sort-mode.js'),
-		forPropertyEditorUis: [UMB_BLOCK_GRID_PROPERTY_EDITOR_UI_ALIAS],
-		conditions: [
-			{
-				alias: UMB_WRITABLE_PROPERTY_CONDITION_ALIAS,
-			},
-		],
-	},
 ];
