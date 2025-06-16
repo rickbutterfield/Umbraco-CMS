@@ -59,12 +59,16 @@
                     <style>
                     @import "${model.stylesheet}"
                     </style>
-                    <div class="umb-block-list__block--view" ng-include="'${model.view}'"></div>
+                    <div
+                      style="display:contents;"
+                      class="umb-block-list__block--view"
+                      ng-include="api.internal.sortMode ? api.internal.sortModeView : '${model.view}'">
+                    </div>
                 `;
         $compile(shadowRoot)($scope);
       }
       else {
-        $element.append($compile('<div class="umb-block-list__block--view" ng-include="model.view"></div>')($scope));
+        $element.append($compile('<div style="display: contents" class="umb-block-list__block--view" ng-include="api.internal.sortMode ? api.internal.sortModeView : model.view"></div>')($scope));
       }
     };
 

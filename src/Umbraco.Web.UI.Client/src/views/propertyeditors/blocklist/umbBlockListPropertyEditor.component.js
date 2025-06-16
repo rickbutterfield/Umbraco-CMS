@@ -1,6 +1,7 @@
 (function () {
     "use strict";
 
+    const DefaultViewFolderPath = "views/propertyeditors/blocklist/blocklistentryeditors/";
 
     /**
      * @ngdoc directive
@@ -34,8 +35,11 @@
         var modelObject;
 
         // Property actions:
+        let propertyActions = null;
         let copyAllBlocksAction = null;
         let deleteAllBlocksAction = null;
+        let enterSortModeAction = null;
+        let exitSortModeAction = null;
         let pasteSingleBlockAction = null;
         let resetSingleBlock = null;
 
@@ -86,6 +90,8 @@
         vm.options = {
             createFlow: false
         };
+        vm.sortMode = false;
+        vm.sortModeView = DefaultViewFolderPath + "listsortblock/listsortblock.editor.html"
 
         localizationService.localizeMany(["grid_addElement", "content_createEmpty"]).then(function (data) {
             vm.labels.grid_addElement = data[0];
@@ -155,6 +161,19 @@
                 }
             };
 
+            enterSortModeAction = {
+              labelKey: 'blockEditor_actionEnterSortMode',
+              icon: 'navigation-vertical',
+              method: enableSortMode,
+              isDisabled: false
+          };
+          exitSortModeAction = {
+              labelKey: 'blockEditor_actionExitSortMode',
+              icon: 'navigation-vertical',
+              method: exitSortMode,
+              isDisabled: false
+          };
+
             copyAllBlocksAction = {
                 labelKey: "clipboard_labelForCopyAllEntries",
                 labelTokens: [vm.model.label],
@@ -191,7 +210,7 @@
                 useLegacyIcon: false
             };
 
-            var propertyActions = [copyAllBlocksAction, deleteAllBlocksAction];
+            propertyActions = [copyAllBlocksAction, deleteAllBlocksAction, enterSortModeAction];
 
             var propertyActionsForSingleBlockMode = [pasteSingleBlockAction, resetSingleBlock];
 
@@ -227,6 +246,23 @@
                 vm.propertyForm.$setDirty();
             }
         }
+
+      function enableSortMode() {
+        vm.sortMode = true;
+        propertyActions.splice(propertyActions.indexOf(enterSortModeAction), 1, exitSortModeAction);
+        if (vm.umbProperty) {
+          vm.umbProperty.setPropertyActions(propertyActions);
+        }
+      }
+
+      vm.exitSortMode = exitSortMode;
+      function exitSortMode() {
+        vm.sortMode = false;
+        propertyActions.splice(propertyActions.indexOf(exitSortModeAction), 1, enterSortModeAction);
+        if (vm.umbProperty) {
+          vm.umbProperty.setPropertyActions(propertyActions);
+        }
+      }
 
         function onLoaded() {
 
@@ -886,6 +922,7 @@
             deleteBlock: deleteBlock,
             openSettingsForBlock: openSettingsForBlock,
             readonly: vm.readonly,
+            internal: vm,
             singleBlockMode: vm.singleBlockMode
         };
 

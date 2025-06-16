@@ -4,6 +4,14 @@
 
     <div class="umb-block-list__wrapper" ng-style="vm.listWrapperStyles">
 
+        <umb-editor-sub-header ng-if="vm.sortMode" appearance="blue">
+          <umb-editor-sub-header-content-right>
+            <umb-button type="button" icon="icon-delete" button-style="primary" label-key="blockEditor_actionExitSortMode"
+              action="vm.exitSortMode()">
+            </umb-button>
+          </umb-editor-sub-header-content-right>
+        </umb-editor-sub-header>
+
         <div ui-sortable="vm.sortableOptions" ng-model="vm.layout" ng-if="vm.loading !== true">
 
             <div ng-repeat="layout in vm.layout track by layout.$block.key">
@@ -20,7 +28,7 @@
                     </div>
                 </button>
 
-                <umb-block-list-row 
+                <umb-block-list-row
                     block-editor-api="vm.blockEditorApi"
                     layout="layout"
                     index="$index">

@@ -47,27 +47,27 @@
             $scope.valFormManager = model.valFormManager;
 
             var shadowRoot = $element[0].attachShadow({ mode: 'open' });
-            shadowRoot.innerHTML = 
+            shadowRoot.innerHTML =
             `
                 <style>@import "assets/css/icons.css?umb__rnd=${Umbraco.Sys.ServerVariables.application.cacheBuster}"</style>
-            
+
                 ${ model.stylesheet ? `
                     <style>
                         @import "${model.stylesheet}?umb__rnd=${Umbraco.Sys.ServerVariables.application.cacheBuster}"
                     </style>`
                     : ''
                 }
-                
-                <div 
-                    style="display:contents;" 
+
+                <div
+                    style="display:contents;"
                     ng-class="{'show-validation': vm.blockEditorApi.internal.showValidation}"
                     ng-include="api.internal.sortMode ? api.internal.sortModeView : '${model.view}'">
                 </div>
             `;
             $compile(shadowRoot)($scope);
-            
+
         };
-        
+
 
         // We need to watch for changes on primitive types and update the $scope values.
         model.$onChanges = function (changes) {
@@ -80,7 +80,7 @@
                 model.block.updateLabel();
             }
         };
-        
+
     }
 
 
