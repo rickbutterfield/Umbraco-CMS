@@ -30,20 +30,36 @@ export class UmbBlockListEntriesContext extends UmbBlockEntriesContext<
 	// We will just say its always allowed for list for now: [NL]
 	public readonly canCreate = new UmbBooleanState(true).asObservable();
 
+	#sortModePropertyContext?: typeof UMB_SORT_MODE_PROPERTY_CONTEXT.TYPE;
+
 	#sortMode = new UmbBooleanState(false);
 	readonly sortMode = this.#sortMode.asObservable();
+
+	#hasCustomViews = new UmbBooleanState(false);
+	readonly hasCustomViews = this.#hasCustomViews.asObservable();
+
+	setHasCustomView(hasCustomView: boolean) {
+		this.#hasCustomViews.setValue(hasCustomView);
+		this.#sortModePropertyContext?.setHasCustomViews(hasCustomView);
+	}
 
 	constructor(host: UmbControllerHost) {
 		super(host, UMB_BLOCK_LIST_MANAGER_CONTEXT);
 
 		this.consumeContext(UMB_SORT_MODE_PROPERTY_CONTEXT, (sortModeContext) => {
-			this.observe(
-				sortModeContext?.sortMode,
-				(sortMode) => {
-					this.#sortMode.setValue(sortMode ?? false);
-				},
-				'observeSortMode',
-			);
+			this.#sortModePropertyContext = sortModeContext;
+
+			if (this.#sortModePropertyContext) {
+				this.#sortModePropertyContext.setHasCustomViews(this.#hasCustomViews.getValue());
+
+				this.observe(
+					sortModeContext?.sortMode,
+					(sortMode) => {
+						this.#sortMode.setValue(sortMode ?? false);
+					},
+					'observeSortMode',
+				);
+			}
 		});
 
 		new UmbModalRouteRegistrationController(this, UMB_BLOCK_CATALOGUE_MODAL)

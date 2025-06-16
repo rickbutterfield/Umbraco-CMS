@@ -25,6 +25,10 @@ export class UmbBlockListEntryContext extends UmbBlockEntryContext<
 	#sortMode = new UmbBooleanState(undefined);
 	readonly sortMode = this.#sortMode.asObservable();
 
+	setHasCustomView(hasCustomView: boolean) {
+		this._entries?.setHasCustomView(hasCustomView);
+	}
+
 	constructor(host: UmbControllerHost) {
 		super(host, UMB_BLOCK_LIST_MANAGER_CONTEXT, UMB_BLOCK_LIST_ENTRIES_CONTEXT);
 	}
