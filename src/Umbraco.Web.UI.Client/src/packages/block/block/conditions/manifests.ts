@@ -21,8 +21,8 @@ export const manifests: Array<ManifestCondition> = [
 	},
 	{
 		type: 'condition',
-		name: 'Block Manager Has Custom View Condition',
-		alias: 'Umb.Condition.BlockManagerHasCustomView',
-		api: () => import('./block-manager-has-custom-view.condition.js'),
+		name: 'Block Property Has Custom Views Condition',
+		alias: 'Umb.Condition.BlockPropertyHasCustomViews',
+		api: () => import('./block-property-has-custom-views.condition.js'),
 	},
 ];

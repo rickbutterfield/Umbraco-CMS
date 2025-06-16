@@ -75,11 +75,9 @@ export class UmbBlockWorkspaceContext<LayoutDataType extends UmbBlockLayoutBaseM
 	readonly hasAnyCustomViews = this.#hasAnyCustomViews.asObservable();
 
 	setHasAnyCustomViews(hasAnyCustomViews: boolean) {
-		debugger;
 		this.#hasAnyCustomViews.setValue(hasAnyCustomViews);
 	}
 	getHasAnyCustomViews() {
-		debugger;
 		return this.#hasAnyCustomViews.value;
 	}
 
@@ -230,18 +228,6 @@ export class UmbBlockWorkspaceContext<LayoutDataType extends UmbBlockLayoutBaseM
 				);
 			},
 			'observeContentTypeId',
-		);
-
-		this.observe(
-			manager.hasAnyCustomViews,
-			(hasAnyCustomViews) => {
-				debugger;
-				if (hasAnyCustomViews) {
-					debugger;
-					this.#hasAnyCustomViews.setValue(hasAnyCustomViews);
-				}
-			},
-			'observeHasAnyCustomViews',
 		);
 	}
 

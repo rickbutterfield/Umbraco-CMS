@@ -13,11 +13,21 @@ export class UmbSortModePropertyContext extends UmbContextBase {
 	#sortMode = new UmbBooleanState(false);
 	readonly sortMode = this.#sortMode.asObservable();
 
+	#hasCustomViews = new UmbBooleanState(false);
+	readonly hasCustomViews = this.#hasCustomViews.asObservable();
+
 	setSortMode(sortMode: boolean | undefined) {
 		this.#sortMode.setValue(sortMode ?? false);
 	}
 	getSortMode(): boolean | undefined {
 		return this.#sortMode.getValue();
+	}
+
+	setHasCustomViews(hasCustomViews: boolean | undefined) {
+		this.#hasCustomViews.setValue(hasCustomViews ?? false);
+	}
+	getHasCustomViews(): boolean | undefined {
+		return this.#hasCustomViews.getValue();
 	}
 
 	constructor(host: UmbControllerHost) {

@@ -53,14 +53,18 @@ export class UmbBlockGridEntriesContext
 		UmbBlockGridLayoutModel,
 		UmbBlockGridWorkspaceOriginData
 	>
-	implements UmbBlockGridScalableContainerContext {
-	//
+	implements UmbBlockGridScalableContainerContext
+{
 	#pathAddendum = new UmbRoutePathAddendumContext(this);
 
+	#sortModePropertyContext?: typeof UMB_SORT_MODE_PROPERTY_CONTEXT.TYPE;
 	#parentEntry?: typeof UMB_BLOCK_GRID_ENTRY_CONTEXT.TYPE;
 
 	#sortMode = new UmbBooleanState(false);
 	readonly sortMode = this.#sortMode.asObservable();
+
+	#hasCustomViews = new UmbBooleanState(false);
+	readonly hasCustomViews = this.#hasCustomViews.asObservable();
 
 	#layoutColumns = new UmbNumberState(undefined);
 	readonly layoutColumns = this.#layoutColumns.asObservable();
@@ -155,6 +159,11 @@ export class UmbBlockGridEntriesContext
 			| undefined;
 	}
 
+	setHasCustomView(hasCustomView: boolean) {
+		this.#hasCustomViews.setValue(hasCustomView);
+		this.#sortModePropertyContext?.setHasCustomViews(hasCustomView);
+	}
+
 	constructor(host: UmbControllerHost) {
 		super(host, UMB_BLOCK_GRID_MANAGER_CONTEXT);
 
@@ -164,13 +173,18 @@ export class UmbBlockGridEntriesContext
 		});
 
 		this.consumeContext(UMB_SORT_MODE_PROPERTY_CONTEXT, (sortModeContext) => {
-			this.observe(
-				sortModeContext?.sortMode,
-				(sortMode) => {
-					this.#sortMode.setValue(sortMode ?? false);
-				},
-				'observeSortMode',
-			);
+			this.#sortModePropertyContext = sortModeContext;
+
+			if (this.#sortModePropertyContext) {
+				this.#sortModePropertyContext.setHasCustomViews(this.#hasCustomViews.getValue());
+				this.observe(
+					sortModeContext?.sortMode,
+					(sortMode) => {
+						this.#sortMode.setValue(sortMode ?? false);
+					},
+					'observeSortMode',
+				);
+			}
 		});
 
 		new UmbModalRouteRegistrationController(this, UMB_BLOCK_CATALOGUE_MODAL)

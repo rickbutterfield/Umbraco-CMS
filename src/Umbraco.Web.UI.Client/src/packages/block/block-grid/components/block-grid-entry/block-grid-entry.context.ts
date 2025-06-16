@@ -106,6 +106,10 @@ export class UmbBlockGridEntryContext
 		this._layout.update({ areas });
 	}
 
+	setHasCustomView(hasCustomView: boolean) {
+		this._entries?.setHasCustomView(hasCustomView);
+	}
+
 	/**
 	 * Set the column span of this entry.
 	 * @param columnSpan {number} The new column span.
