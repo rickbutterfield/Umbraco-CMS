@@ -12,6 +12,17 @@
         </umb-block-list-block>
 
         <div class="umb-block-list__block--actions">
+            <button type="button" class="btn-reset umb-outline action --content" localize="title" title="actions_editContent"
+                ng-click="vm.blockEditorApi.editBlock(vm.layout.$block, false, vm.index, vm.blockForm);"
+                ng-class="{ '--error': vm.blockForm.$error.valServerMatchContent }"
+                ng-if="vm.layout.$block.showContent === true">
+                <umb-icon icon="icon-edit" class="icon"></umb-icon>
+                <span class="sr-only">
+                    <localize key="general_content">Content</localize>
+                </span>
+                <div class="__error-badge">!</div>
+            </button>
+
             <button type="button" class="btn-reset umb-outline action --settings" localize="title" title="actions_editSettings"
                     ng-click="vm.blockEditorApi.openSettingsForBlock(vm.layout.$block, vm.index, vm.blockRowForm);"
                     ng-class="{ '--error': vm.blockRowForm.$error.valServerMatchSettings && vm.valFormManager.isShowingValidation() }"
