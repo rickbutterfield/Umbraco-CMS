@@ -11,11 +11,11 @@
     }
   }
 
-  .umb-icon {
+  .blockelement-listsortblock-editor .umb-icon {
     animation: umb-icon-jump 1s infinite ease-in-out;
   }
 
-  .blockelement-gridsortblock-editor {
+  .blockelement-listsortblock-editor {
     position: relative;
     border-radius: 3px;
     height: 100%;
@@ -25,7 +25,7 @@
     background-color: white;
   }
 
-  .blockelement-gridsortblock-editor>button {
+  .blockelement-listsortblock-editor>button {
     position: relative;
     display: flex;
     align-items: center;
@@ -41,17 +41,17 @@
     transition: border-color 120ms, background-color 120ms;
   }
 
-  .blockelement-gridsortblock-editor>button:hover {
+  .blockelement-listsortblock-editor>button:hover {
     color: #2152A3;
   }
 
-  .blockelement-gridsortblock-editor .icon {
+  .blockelement-listsortblock-editor .icon {
     font-size: 22px;
     margin-right: 10px;
     display: inline-block;
   }
 
-  .blockelement-gridsortblock-editor>button>span {
+  .blockelement-listsortblock-editor>button>span {
     position: relative;
     display: inline-block;
     padding-top: 2px;
@@ -59,31 +59,30 @@
   }
 
   :host {
-    --inherited--column-gap: var(--umb-block-grid--column-gap, 10px);
-    --inherited--row-gap: var(--umb-block-grid--row-gap, 10px);
-    --inherited--areas-column-gap: var(--umb-block-grid--areas-column-gap, 10px);
-    --inherited--areas-row-gap: var(--umb-block-grid--areas-row-gap, 10px);
+    --inherited--column-gap: var(--umb-block-list--column-gap, 10px);
+    --inherited--row-gap: var(--umb-block-list--row-gap, 10px);
+    --inherited--areas-column-gap: var(--umb-block-list--areas-column-gap, 10px);
+    --inherited--areas-row-gap: var(--umb-block-list--areas-row-gap, 10px);
   }
 
   [part='area-container'] {
     box-sizing: border-box;
     padding: 10px;
-    --umb-block-grid--column-gap: var(--inherited--column-gap, 10px);
-    --umb-block-grid--row-gap: var(--inherited--row-gap, 10px);
-    --umb-block-grid--areas-column-gap: var(--inherited--areas-column-gap, 10px);
-    --umb-block-grid--areas-row-gap: var(--inherited--areas-row-gap, 10px);
+    --umb-block-list--column-gap: var(--inherited--column-gap, 10px);
+    --umb-block-list--row-gap: var(--inherited--row-gap, 10px);
+    --umb-block-list--areas-column-gap: var(--inherited--areas-column-gap, 10px);
+    --umb-block-list--areas-row-gap: var(--inherited--areas-row-gap, 10px);
   }
 
 </style>
 
-<div class="blockelement-gridsortblock-editor"
-  ng-class="{ '--active': block.active, '--error': parentForm.$invalid && valFormManager.isShowingValidation() }">
-  <button type="button" ng-click="block.showContent ? block.edit() : null" ng-focus="block.focus"
-    val-server-property-class="">
+<button
+  type="button"
+  class="btn-reset umb-outline blockelement-labelblock-editor blockelement-listsortblock-editor blockelement__draggable-element"
+  ng-click="block.edit()"
+  ng-focus="block.focus"
+  ng-class="{ '--active': block.active, '--error': parentForm.$invalid && valFormManager.isShowingValidation() }"
+  val-server-property-class="">
     <umb-icon icon="{{block.content.icon}}" class="icon"></umb-icon>
     <span>{{block.label}}</span>
-  </button>
-
-  <umb-block-grid-render-area-slots ng-if="block.layout.areas.length > 0"></umb-block-grid-render-area-slots>
-
-</div>
+</button>
