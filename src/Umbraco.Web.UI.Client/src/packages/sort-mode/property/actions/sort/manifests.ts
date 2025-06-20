@@ -12,7 +12,7 @@ export const UMB_PROPERTY_ACTION_TOGGLE_SORT_MODE_KIND_MANIFEST: UmbExtensionMan
 		type: 'propertyAction',
 		kind: 'toggleSortMode',
 		api: () => import('./sort-mode.property-action.js'),
-		weight: 1200,
+		weight: 1000,
 		meta: {
 			icon: 'icon-navigation-vertical',
 			label: 'Sort Mode',
