@@ -8,7 +8,10 @@ export class UmbBlockPropertyHasCustomViewsCondition
 	extends UmbConditionBase<BlockPropertyHasCustomViewsConditionConfig>
 	implements UmbExtensionCondition
 {
-	constructor(host: UmbControllerHost, args: UmbConditionControllerArguments<BlockPropertyHasCustomViewsConditionConfig>) {
+	constructor(
+		host: UmbControllerHost,
+		args: UmbConditionControllerArguments<BlockPropertyHasCustomViewsConditionConfig>
+	) {
 		super(host, args);
 
 		this.consumeContext(UMB_SORT_MODE_PROPERTY_CONTEXT, (context) => {
@@ -16,6 +19,7 @@ export class UmbBlockPropertyHasCustomViewsCondition
 				context?.hasCustomViews,
 				(hasCustomViews) => {
 					if (hasCustomViews !== undefined) {
+						debugger;
 						this.permitted = hasCustomViews === true;
 					}
 				},
